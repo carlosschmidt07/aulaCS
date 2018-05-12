@@ -10,6 +10,11 @@ namespace Aula1105_POO
     {
         static void Main(string[] args)
         {
+            Aluno a = new Aluno();
+
+            a.Nome = "Godofredo";
+            Console.WriteLine("Aluno: " + a.Nome);
+            
         }
     }
 }
