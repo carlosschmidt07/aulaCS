@@ -8,7 +8,8 @@ namespace Aula1105_POO
 {
     class Aluno : Pessoa
     {
-        private string nome;
+        
+        private string matricula;
 
 
         public Aluno()
@@ -20,5 +21,11 @@ namespace Aula1105_POO
             Nome = nome;
         }
 
+        public string Matricula { get => matricula; set => matricula = value; }
+
+        public override string ShowInfoPessoa()
+        {
+            return "Aluno: " + Nome + ", CPF: " + Cpf + ", Matricula: " + Matricula;
+        }
     }
 }

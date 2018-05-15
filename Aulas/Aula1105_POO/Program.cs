@@ -13,8 +13,13 @@ namespace Aula1105_POO
             Aluno a = new Aluno();
 
             a.Nome = "Godofredo";
-            Console.WriteLine("Aluno: " + a.Nome);
+            a.Cpf = "12345678909";
+            a.Matricula = "54321";
+
+            Console.WriteLine(a.ShowInfoPessoa()); 
+            //Console.WriteLine("Aluno: " + a.Nome);
+            Console.ReadKey();
             
         }
     }
-}
+} 

@@ -20,7 +20,7 @@ namespace Aula1105_POO
         {
             Nome = nome;
         }
-        
+        public abstract string ShowInfoPessoa();
     }
    
 }
