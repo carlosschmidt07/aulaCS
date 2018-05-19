@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aula1805_Camadas.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,9 @@ namespace Aula1805_Camadas
     {
         static void Main(string[] args)
         {
+            AtividadesView av = new AtividadesView();
+
+            av.ExibirMenu();
         }
     }
 }
