@@ -54,6 +54,17 @@ namespace Aula1805_Camadas.Controller
             return null;
 
         }
+        public Atividade BuscarPorNome(string nome)
+        {
+            foreach ( Atividade a in  minhasAtividades)
+            {
+                if (a.Nome.Equals(nome))
+                {
+                    return a;
+                }
+            }
+            return null;
+        }
     }
 
 }

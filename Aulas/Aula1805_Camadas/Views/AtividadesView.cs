@@ -24,6 +24,8 @@ namespace Aula1805_Camadas.Views
             Console.WriteLine("= 2- Listar Atividade");
             Console.WriteLine("= 3- Editar Atividade");
             Console.WriteLine("= 4- Excluir Atividade");
+            Console.WriteLine("= 5- Buscar por nome");
+
             Console.WriteLine("= 6- Sair");
             Console.WriteLine("=============================");
             Console.Write("Digite sua opção: ");
@@ -37,6 +39,7 @@ namespace Aula1805_Camadas.Views
 
                     case 2:
                         ExibirAtividadesCadastradas();
+                        
                         break;
                     case 3:
                         EditarAtividadeCadastrada();
@@ -46,6 +49,10 @@ namespace Aula1805_Camadas.Views
                     case 4:
                         ExcluirAtividadeCadastrada();
                         break;
+                    case 5:
+                        BuscaAtividadePorNome();
+                        break;
+
                     default:
                     break;
             }
@@ -53,18 +60,49 @@ namespace Aula1805_Camadas.Views
             } while (opcao !=6);
         }
 
+        private void BuscaAtividadePorNome()
+        {
+            Console.WriteLine("Buscar Atividade pelo NOme");
+            Console.WriteLine("Digite o nome da atividade: ");
+            Atividade x = ac.BuscarPorNome(Console.ReadLine());
+            if (x != null)
+            {
+                Console.WriteLine("--");
+                Console.WriteLine("id: " + x.AtividadeID);
+                Console.WriteLine("Nome: " + x.Nome);
+                Console.WriteLine("Ativo: " + x.Ativo);
+                Console.WriteLine("--");
+            }
+            else
+            {
+                Console.WriteLine("Nome não encontrado!");
+            }
+        }
+
         private void ExcluirAtividadeCadastrada()
         {
             Console.Clear();
             ExibirAtividadesCadastradas();
             Console.WriteLine("Excluir Atividades Cadastradas");
-            Console.Write("Digite o ID da atividade a ser alterada: ");
-            Atividade atividade = ac.BuscarPorID(int.Parse(Console.ReadLine()));
-            if (atividade != null)
+            Console.Write("Digite o ID da atividade a ser excluida: ");
+            try
             {
-                ac.Excluir(atividade);
-            }else
-                Console.WriteLine("Atividade não encontrada");
+                Atividade atividade = ac.BuscarPorID(int.Parse(Console.ReadLine()));
+                if (atividade != null)
+                {
+                    ac.Excluir(atividade);
+                    Console.Clear();
+                    Console.WriteLine("--Atividade excluida comn sucesso!!--");
+                }
+                else
+                    Console.WriteLine("Atividade não encontrada");
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Valor invalido...");
+            }
+           
         }
 
         private void EditarAtividadeCadastrada()
@@ -72,13 +110,39 @@ namespace Aula1805_Camadas.Views
             Atividade atividade = new Atividade();
             ExibirAtividadesCadastradas();
             Console.Write("Digite o ID da atividade a ser alterada: ");
-            atividade.AtividadeID = int.Parse(Console.ReadLine());
-            Console.Write("Digite novo nome: ");
-            atividade.Nome = Console.ReadLine();
-            Console.Write("Ativo? (s/n)");
-            atividade.Ativo = Console.ReadLine() == "s" ? true : false;
-            ac.Editar(atividade);
+           
+            try
+            {
+                int id = int.Parse(Console.ReadLine());
+                Atividade atividadeX = ac.BuscarPorID(id);
+               
+                if ( atividadeX != null)
+                {
+                    atividade.AtividadeID = id;
+                    Console.Write("Digite novo nome: ");
+                    atividade.Nome = Console.ReadLine();
+                    Console.Write("Ativo? (s/n)");
+                    atividade.Ativo = Console.ReadLine() == "s" ? true : false;
+                    ac.Editar(atividade);
+                    Console.Clear();
+                    Console.WriteLine("--Atividade editada comn sucesso!!--");
+                }
+                else
+                {
+                    Console.WriteLine("ID não encontrado");
+                }
 
+               
+            }
+            catch (Exception)
+            {
+
+                Console.WriteLine("Valor invalido...");
+                
+            }
+
+
+            
 
         }
 
@@ -96,6 +160,7 @@ namespace Aula1805_Camadas.Views
 
             }
             Console.WriteLine("-- Fim da lista -- ");
+            
         }
 
         private void CadastrarAtividade()
@@ -105,6 +170,8 @@ namespace Aula1805_Camadas.Views
             atividade.Nome = Console.ReadLine();
             atividade.Ativo = true;
             ac.Salvar(atividade);
+            Console.Clear();
+            Console.WriteLine("--Atividade cadastrada comn sucesso!!--");
         }
     }
 }
