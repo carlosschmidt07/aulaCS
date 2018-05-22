@@ -10,10 +10,19 @@ namespace Aula1805_Camadas.Views
 {
     class AtividadesView
     {
+        enum OpcesMenu
+        {
+            CadastrarAtividades = 1,
+            ExibirAtividadeCadastrada = 2,
+            EditarAtividadeCadastrada = 3,
+            ExcluirAtividade = 4,
+            BuscarAtividadePorNome = 5,
+            Sair = 6
+        }
         AtividadesController ac = new AtividadesController();
         public void ExibirMenu()
         {
-            int opcao = 6;
+            OpcesMenu opcao = OpcesMenu.Sair;
             do
             {
 
@@ -29,54 +38,71 @@ namespace Aula1805_Camadas.Views
             Console.WriteLine("= 6- Sair");
             Console.WriteLine("=============================");
             Console.Write("Digite sua opção: ");
-            opcao = int.Parse(Console.ReadLine());
+                try
+                {
+                    opcao = (OpcesMenu)int.Parse(Console.ReadLine());
+                }
+                catch (Exception)
+                {
 
-            switch (opcao)
-            {
-                    case 1:
+                    Console.WriteLine("Valor invalido...");
+                
+                }
+
+                switch (opcao)
+                {
+                    case OpcesMenu.CadastrarAtividades:
                         CadastrarAtividade();
                         break;
-
-                    case 2:
+                    case OpcesMenu.ExibirAtividadeCadastrada:
                         ExibirAtividadesCadastradas();
-                        
                         break;
-                    case 3:
+                    case OpcesMenu.EditarAtividadeCadastrada:
                         EditarAtividadeCadastrada();
-
                         break;
-
-                    case 4:
+                    case OpcesMenu.ExcluirAtividade:
                         ExcluirAtividadeCadastrada();
                         break;
-                    case 5:
+                    case OpcesMenu.BuscarAtividadePorNome:
                         BuscaAtividadePorNome();
                         break;
-
+                    case OpcesMenu.Sair:
+                        break;
                     default:
-                    break;
-            }
+                        Console.WriteLine("Opçao Invalida...");
+                        break;
+                }
+                 
                 Console.ReadKey();
-            } while (opcao !=6);
+            } while (opcao != OpcesMenu.Sair);
         }
 
         private void BuscaAtividadePorNome()
         {
-            Console.WriteLine("Buscar Atividade pelo NOme");
-            Console.WriteLine("Digite o nome da atividade: ");
-            Atividade x = ac.BuscarPorNome(Console.ReadLine());
-            if (x != null)
+            Console.WriteLine("Buscar Atividade pelo Nome");
+            Console.Write("Digite o nome da atividade: ");
+            List<Atividade> x = ac.BuscarPorNome(Console.ReadLine());
+            if (x.Count > 0)
             {
-                Console.WriteLine("--");
-                Console.WriteLine("id: " + x.AtividadeID);
-                Console.WriteLine("Nome: " + x.Nome);
-                Console.WriteLine("Ativo: " + x.Ativo);
-                Console.WriteLine("--");
+                foreach (Atividade a in x)
+                {
+                    ExibirDetalhesAtividade(a);
+
+                }
             }
             else
             {
-                Console.WriteLine("Nome não encontrado!");
+                Console.WriteLine("Não ha atividades com esse nome ");
             }
+        }
+
+        private static void ExibirDetalhesAtividade(Atividade a)
+        {
+            Console.WriteLine("-Dados Atividade-");
+            Console.WriteLine("id: " + a.AtividadeID);
+            Console.WriteLine("Nome: " + a.Nome);
+            Console.WriteLine("Ativo: " + a.Ativo);
+            Console.WriteLine("--");
         }
 
         private void ExcluirAtividadeCadastrada()
@@ -151,11 +177,7 @@ namespace Aula1805_Camadas.Views
             Console.WriteLine("--Exibindo atividades cadastradas -- ");
             foreach (Atividade a in ac.Listar())
             {
-                Console.WriteLine("-Dados Atividade-");
-                Console.WriteLine("id: " + a.AtividadeID);
-                Console.WriteLine("Nome: " + a.Nome);
-                Console.WriteLine("Ativo: " + a.Ativo);
-                Console.WriteLine("--");
+                ExibirDetalhesAtividade(a);
 
 
             }
